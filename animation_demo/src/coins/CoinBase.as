@@ -57,7 +57,7 @@ package coins
 				return;
 			}
 
-			_currentUrl = "assets/Coinzz/c_" + _id + "/c_" + _id + "_" + toFiveDigits(_frames.length) + ".png";
+			_currentUrl = "assets/c_" + _id + "/c_" + _id + "_" + toFiveDigits(_frames.length) + ".png";
 
 			var context:LoaderContext = new LoaderContext();
 
