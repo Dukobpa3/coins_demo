@@ -1,27 +1,32 @@
 package coins
 {
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.system.LoaderContext;
 
 	import gd.eggs.loading.BulkLoader;
 	import gd.eggs.loading.loadingtypes.LoadingItem;
 
 
-	public class CoinBase extends Bitmap
+	public class CoinBase extends EventDispatcher
 	{
 		private static const TOTAL_FRAMES:int = 71;
 
 		private var _loader:BulkLoader;
 
 		protected var _frames:Vector.<BitmapData>;
-		protected var _current:int = 0;
+		private var _current:int = 0;
 
 		private var _currentUrl:String;
 		private var _id:String;
 
 		private var _globalTimer:GlobalTimer;
+
+		public var x:int;
+		public var y:int;
+		public var scale:Number;
+		public var alpha:Number;
 
 		public function CoinBase(id:String)
 		{
@@ -55,8 +60,6 @@ package coins
 
 			_current ++;
 			if(_current >= _frames.length) _current = 0;
-
-			this.bitmapData = _frames[_current];
 		}
 
 		private function loadNext():void
@@ -110,5 +113,7 @@ package coins
 
 			return result + numStr;
 		}
+
+		public function get current():BitmapData { return _frames[_current]; }
 	}
 }

@@ -5,12 +5,14 @@ package
 	import fl.controls.Button;
 
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.system.Security;
 
 
-	[SWF (width=800, height=600, backgroundColor=0xAAAAAA)]
+	[SWF (width=800, height=600, backgroundColor=0xaaaaaa)]
 	public class AnimationDemo extends Sprite
 	{
 		private var _animationPanel:AnimationPanel;
@@ -30,6 +32,9 @@ package
 
 		private function init(event:Event = null):void
 		{
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
+
 			_startBtn = new Button();
 			_pauseBtn = new Button();
 
