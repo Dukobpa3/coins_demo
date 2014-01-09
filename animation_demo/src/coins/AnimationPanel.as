@@ -2,37 +2,30 @@ package coins
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.events.Event;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 
+	import gd.eggs.util.GlobalTimer;
+
 
 	public class AnimationPanel extends Bitmap
 	{
-
-		private static const SIZE:Rectangle = new Rectangle(0, 0, 800, 600);
-
-		private var _coins:Vector.<CoinBase>;
+		private var _coins:Vector.<CoinModel>;
 		private var _globalTimer:GlobalTimer;
 
-		private var _playing:Boolean;
-
 		private var _counter:TextField;
-
 		private var _date:int;
 
-		public function AnimationPanel()
-		{
-			super();
-		}
+		public function AnimationPanel() { }
 
 		public function init():void
 		{
-			_coins = new Vector.<CoinBase>();
+			_coins = new Vector.<CoinModel>();
 
 			_globalTimer = GlobalTimer.getInstance();
 
@@ -40,61 +33,70 @@ package coins
 			_counter.defaultTextFormat = new TextFormat("_sans", 14, 0xff0000, true);
 			_counter.autoSize = TextFieldAutoSize.LEFT;
 
-			bitmapData = new BitmapData(SIZE.width, SIZE.height, true, 0xaaaaaa);
+			bitmapData = new BitmapData(Config.SIZE.x, Config.SIZE.y, true, 0xaaaaaa);
 			smoothing = true;
 
-			addCoin();
+			addCoins();
 		}
 
-		private function addCoin():void
+		private function addCoins():void
 		{
-			var coin:CoinBase = new CoinBase("01");
-			coin.addEventListener(Event.COMPLETE, onLoadingComplete);
+			for (var i:int = 0 ; i < 200 ; i ++)
+			{
+				var pos:Point = new Point(
+						int(Math.random() * Config.SIZE.x) - 51,
+						int(Math.random() * Config.SIZE.y) - Config.SIZE.y - 102);
 
-			coin.init();
-			coin.x = int(Math.random() * SIZE.width) - 51;
-			coin.y = int(Math.random() * SIZE.height) - 51;
-			coin.alpha = coin.scale = (Math.random() * 0.5) + 0.5;
-		}
+				var depth:Number = (Math.random() * 0.5) + 0.5;
 
-		private function sortByScale(x:CoinBase, y:CoinBase):Number
-		{
-			return x.scale < y.scale ? -1
-					: x.scale > y.scale ? 1
-					: 0;
-		}
+				var id:String = ["01", "02", "03"][int(Math.random() * 3)];
 
-		private function onLoadingComplete(event:Event):void
-		{
+				var coin:CoinModel = new CoinModel(id, Config.FRAMES_BY_ID[id], pos, depth);
+				coin.init();
+
+				_coins.push(coin);
+			}
+
+			_coins.sort(sortByDepth);
+
 			_globalTimer.addFrameCallback(onFrame);
-			_playing = true;
+		}
 
-			_coins.push(event.currentTarget as CoinBase);
+		private function sortByDepth(x:CoinModel, y:CoinModel):Number
+		{
+			return    x.depth < y.depth ? -1
+					: x.depth > y.depth ? 1
+					: 0;
 		}
 
 		private function onFrame(date:int):void
 		{
-			if (_coins.length < 1000)
-			{
-				addCoin();
-				_coins.sort(sortByScale);
-			}
-
 			bitmapData.lock();
-			bitmapData.fillRect(SIZE, 0x00000000);
+			bitmapData.fillRect(new Rectangle(0, 0, Config.SIZE.x, Config.SIZE.y), 0x00000000);
 
 			for (var i:int = 0 ; i < _coins.length ; i ++)
 			{
-				var coin:CoinBase = _coins[i];
+				var coin:CoinModel = _coins[i];
 				coin.nextFrame();
+				coin.move();
+
 				var m:Matrix = new Matrix();
-				m.scale(coin.scale, coin.scale);
+				m.scale(coin.depth, coin.depth);
 				m.translate(coin.x, coin.y);
 
 				var c:ColorTransform = new ColorTransform();
-				c.alphaMultiplier = coin.alpha;
 
-				bitmapData.draw(coin.current, m, c, null, null, true);
+				var mul:Number = 1 - coin.depth;
+
+				c.redMultiplier = c.greenMultiplier = c.blueMultiplier = (1 - mul);
+				c.alphaMultiplier = 1;
+				c.alphaOffset = 0;
+
+				c.redOffset = Math.round(mul * 0x33);
+				c.greenOffset = Math.round(mul * 0x33);
+				c.blueOffset = Math.round(mul * 0x33);
+
+				bitmapData.draw(CoinsFactory.getFrame(coin.id, coin.frame), m, c, null, null, true);
 			}
 
 			_counter.text =

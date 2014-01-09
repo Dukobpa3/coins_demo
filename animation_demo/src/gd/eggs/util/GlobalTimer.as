@@ -1,4 +1,5 @@
-package {
+package gd.eggs.util
+{
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
@@ -64,7 +65,6 @@ package {
 		public static function updateDate(date:Date):void
 		{
 			getInstance();
-
 			if (!_instance._timer.hasEventListener(TimerEvent.TIMER))
 			{
 				_instance._timer.addEventListener(TimerEvent.TIMER, _instance.onTimer);

@@ -1,6 +1,7 @@
 package
 {
 	import coins.AnimationPanel;
+	import coins.CoinsFactory;
 
 	import fl.controls.Button;
 
@@ -9,15 +10,21 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.ProgressEvent;
+	import flash.geom.Rectangle;
 	import flash.system.Security;
 
+	import gd.eggs.loading.BulkProgressEvent;
 
-	[SWF (width=800, height=600, backgroundColor=0xaaaaaa)]
+	import gd.eggs.util.GlobalTimer;
+
+
+	[SWF (width=800, height=600, backgroundColor=0xaaaaaa, frameRate=40)]
 	public class AnimationDemo extends Sprite
 	{
 		private var _animationPanel:AnimationPanel;
-
 		private var _startBtn:Button;
+
 
 		public function AnimationDemo()
 	    {
@@ -47,11 +54,33 @@ package
 
 		private function onStartClick(event:MouseEvent):void
 		{
+			_startBtn.visible = false;
+
+			CoinsFactory.dispatcher.addEventListener(Event.COMPLETE, onAllLoaded);
+			CoinsFactory.dispatcher.addEventListener(ProgressEvent.PROGRESS, onProgress);
+			CoinsFactory.init();
+		}
+
+		private function onProgress(event:BulkProgressEvent):void
+		{
+			var rect:Rectangle = new Rectangle(200, 290, 400, 20);
+			this.graphics.clear();
+			this.graphics.lineStyle(2);
+			this.graphics.drawRoundRect(rect.x, rect.y, rect.width, rect.height, 3);
+
+			this.graphics.lineStyle();
+			this.graphics.beginFill(0x00ff00);
+			this.graphics.drawRoundRect(rect.x + 1, rect.y + 1, rect.width * CoinsFactory.percentLoaded, 18, 3);
+			this.graphics.endFill();
+		}
+
+		private function onAllLoaded(event:BulkProgressEvent):void
+		{
+			this.graphics.clear();
+
 			_animationPanel = new AnimationPanel();
 			addChildAt(_animationPanel, 0);
 			_animationPanel.init();
-
-			_startBtn.visible = false;
 		}
 	}
 }
