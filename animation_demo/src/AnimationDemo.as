@@ -2,6 +2,8 @@ package
 {
 	import coins.AnimationPanel;
 
+	import com.junkbyte.console.Cc;
+
 	import fl.controls.Button;
 
 	import flash.display.Sprite;
@@ -34,6 +36,10 @@ package
 		{
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
+
+			Cc.config.alwaysOnTop = true;
+			Cc.startOnStage(this, "1");
+			Cc.fpsMonitor = true;
 
 			_startBtn = new Button();
 			_pauseBtn = new Button();
