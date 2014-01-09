@@ -21,8 +21,6 @@ package coins
 		private var _currentUrl:String;
 		private var _id:String;
 
-		private var _globalTimer:GlobalTimer;
-
 		public var x:int;
 		public var y:int;
 		public var scale:Number;
@@ -32,8 +30,6 @@ package coins
 		{
 			_id = id;
 
-			_globalTimer = GlobalTimer.getInstance();
-
 			_frames = new <BitmapData>[];
 			_loader = BulkLoader.getLoader("coinsLoader");
 			_loader.addEventListener(BulkLoader.ERROR, onError);
@@ -42,16 +38,6 @@ package coins
 		public function init():void
 		{
 			loadNext();
-		}
-
-		public function play():void
-		{
-			_globalTimer.addFrameCallback(onEnterFrame);
-		}
-
-		public function stop():void
-		{
-			_globalTimer.removeFrameCallback(onEnterFrame);
 		}
 
 		public function nextFrame():void
@@ -85,11 +71,6 @@ package coins
 				loader.addEventListener(Event.COMPLETE, onLoadComplete);
 				loader.load();
 			}
-		}
-
-		private function onEnterFrame(time:int):void
-		{
-			nextFrame();
 		}
 
 		private function onLoadComplete(event:Event):void

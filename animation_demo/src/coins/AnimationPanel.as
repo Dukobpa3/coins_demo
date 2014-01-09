@@ -7,6 +7,7 @@ package coins
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 
 
@@ -22,6 +23,8 @@ package coins
 
 		private var _counter:TextField;
 
+		private var _date:int;
+
 		public function AnimationPanel()
 		{
 			super();
@@ -34,22 +37,13 @@ package coins
 			_globalTimer = GlobalTimer.getInstance();
 
 			_counter = new TextField();
-			_counter.defaultTextFormat = new TextFormat("_sans", 18, 0xff0000, true);
+			_counter.defaultTextFormat = new TextFormat("_sans", 14, 0xff0000, true);
+			_counter.autoSize = TextFieldAutoSize.LEFT;
 
 			bitmapData = new BitmapData(SIZE.width, SIZE.height, true, 0xaaaaaa);
 			smoothing = true;
 
 			addCoin();
-		}
-
-		public function pause():void
-		{
-			for each(var coin:CoinBase in _coins) coin.stop();
-		}
-
-		public function resume():void
-		{
-			for each(var coin:CoinBase in _coins) coin.play();
 		}
 
 		private function addCoin():void
@@ -61,9 +55,6 @@ package coins
 			coin.x = int(Math.random() * SIZE.width) - 51;
 			coin.y = int(Math.random() * SIZE.height) - 51;
 			coin.alpha = coin.scale = (Math.random() * 0.5) + 0.5;
-
-			_coins.push(coin);
-			_counter.text = String(_coins.length);
 		}
 
 		private function sortByScale(x:CoinBase, y:CoinBase):Number
@@ -78,7 +69,7 @@ package coins
 			_globalTimer.addFrameCallback(onFrame);
 			_playing = true;
 
-			(event.currentTarget as CoinBase).play();
+			_coins.push(event.currentTarget as CoinBase);
 		}
 
 		private function onFrame(date:int):void
@@ -95,6 +86,7 @@ package coins
 			for (var i:int = 0 ; i < _coins.length ; i ++)
 			{
 				var coin:CoinBase = _coins[i];
+				coin.nextFrame();
 				var m:Matrix = new Matrix();
 				m.scale(coin.scale, coin.scale);
 				m.translate(coin.x, coin.y);
@@ -104,6 +96,13 @@ package coins
 
 				bitmapData.draw(coin.current, m, c, null, null, true);
 			}
+
+			_counter.text =
+					"num coins:\t" + String(_coins.length) + "\n" +
+					"frame time:\t" + String(date - _date) + "\n" +
+					"FPS:\t\t" + Math.round(1000 / (date - _date)).toString();
+
+			_date = date;
 
 			bitmapData.draw(_counter);
 

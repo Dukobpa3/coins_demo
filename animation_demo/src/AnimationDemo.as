@@ -2,8 +2,6 @@ package
 {
 	import coins.AnimationPanel;
 
-	import com.junkbyte.console.Cc;
-
 	import fl.controls.Button;
 
 	import flash.display.Sprite;
@@ -20,9 +18,6 @@ package
 		private var _animationPanel:AnimationPanel;
 
 		private var _startBtn:Button;
-		private var _pauseBtn:Button;
-
-		private var _playing:Boolean;
 
 		public function AnimationDemo()
 	    {
@@ -37,27 +32,15 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 
-			Cc.config.alwaysOnTop = true;
-			Cc.startOnStage(this, "1");
-			Cc.fpsMonitor = true;
-
 			_startBtn = new Button();
-			_pauseBtn = new Button();
 
 			_startBtn.addEventListener(MouseEvent.CLICK, onStartClick);
-			_pauseBtn.addEventListener(MouseEvent.CLICK, onPauseClick);
 
 			_startBtn.label = "Start";
 			_startBtn.x = (stage.stageWidth - _startBtn.width) * 0.5;
 			_startBtn.y = (stage.stageHeight - _startBtn.height) * 0.5;
 
-			_pauseBtn.label = "Pause";
-			_pauseBtn.x = (stage.stageWidth - _pauseBtn.width) * 0.5;
-			_pauseBtn.y = (stage.stageHeight - _pauseBtn.height) * 0.5;
-			_pauseBtn.visible = false;
-
 			addChild(_startBtn);
-			addChild(_pauseBtn);
 
 			GlobalTimer.updateDate(new Date());
 		}
@@ -69,25 +52,6 @@ package
 			_animationPanel.init();
 
 			_startBtn.visible = false;
-			_pauseBtn.visible = true;
-
-			_playing = true;
-		}
-
-		private function onPauseClick(event:MouseEvent):void
-		{
-			if (_playing)
-			{
-				_animationPanel.pause();
-				_playing = false;
-				_pauseBtn.label = "Resume";
-			}
-			else
-			{
-				_animationPanel.resume();
-				_playing = true;
-				_pauseBtn.label = "Pause";
-			}
 		}
 	}
 }
