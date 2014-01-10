@@ -1,5 +1,7 @@
 package coins
 {
+	import aze.motion.eaze;
+
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.ColorTransform;
@@ -16,6 +18,8 @@ package coins
 	public class AnimationPanel extends Bitmap
 	{
 		private var _coins:Vector.<CoinModel>;
+		private var _unsorted:Vector.<CoinModel>;
+		private var _currentStart:int;
 		private var _globalTimer:GlobalTimer;
 
 		private var _counter:TextField;
@@ -26,6 +30,7 @@ package coins
 		public function init():void
 		{
 			_coins = new Vector.<CoinModel>();
+			_unsorted = new Vector.<CoinModel>();
 
 			_globalTimer = GlobalTimer.getInstance();
 
@@ -37,15 +42,25 @@ package coins
 			smoothing = true;
 
 			addCoins();
+
+			_currentStart = 0;
+
+			_globalTimer.addFrameCallback(onFrame);
 		}
 
 		private function addCoins():void
 		{
-			for (var i:int = 0 ; i < 200 ; i ++)
+			for (var i:int = 0; i < 400; i++)
 			{
+				// for gold rain
+				// var pos:Point = new Point(
+				//		int(Math.random() * Config.SIZE.x) - 51,
+				//		int(Math.random() * Config.SIZE.y) - Config.SIZE.y - 102);
+
+				// for fountain
 				var pos:Point = new Point(
-						int(Math.random() * Config.SIZE.x) - 51,
-						int(Math.random() * Config.SIZE.y) - Config.SIZE.y - 102);
+						Math.random() * Config.SIZE.x * 2 - Config.SIZE.x /2,
+						Config.SIZE.y + 102);
 
 				var depth:Number = (Math.random() * 0.5) + 0.5;
 
@@ -55,11 +70,10 @@ package coins
 				coin.init();
 
 				_coins.push(coin);
+				_unsorted.push(coin);
 			}
 
 			_coins.sort(sortByDepth);
-
-			_globalTimer.addFrameCallback(onFrame);
 		}
 
 		private function sortByDepth(x:CoinModel, y:CoinModel):Number
@@ -74,11 +88,10 @@ package coins
 			bitmapData.lock();
 			bitmapData.fillRect(new Rectangle(0, 0, Config.SIZE.x, Config.SIZE.y), 0x00000000);
 
-			for (var i:int = 0 ; i < _coins.length ; i ++)
+			for (var i:int = 0; i < _coins.length; i++)
 			{
 				var coin:CoinModel = _coins[i];
 				coin.nextFrame();
-				coin.move();
 
 				var m:Matrix = new Matrix();
 				m.scale(coin.depth, coin.depth);
@@ -101,14 +114,29 @@ package coins
 
 			_counter.text =
 					"num coins:\t" + String(_coins.length) + "\n" +
-					"frame time:\t" + String(date - _date) + "\n" +
-					"FPS:\t\t" + Math.round(1000 / (date - _date)).toString();
+							"frame time:\t" + String(date - _date) + "\n" +
+							"FPS:\t\t" + Math.round(1000 / (date - _date)).toString();
 
 			_date = date;
 
 			bitmapData.draw(_counter);
 
 			bitmapData.unlock();
+
+			_coins.sort(sortByDepth);
+
+			if (_currentStart >= _coins.length) return;
+
+			coin = _unsorted[_currentStart ++];
+			var depth:Number = coin.depth > 0.75 ? 0.5 : 1;
+
+			var x1:int = coin.x < 400 ? coin.x + 200 : coin.x - 200;
+			var x2:int = coin.x < 400 ? coin.x + 400 : coin.x - 400;
+
+			var y1:int = -Config.SIZE.y * 1.2;
+			var y2:int = Config.SIZE.y + 102;
+
+			eaze(coin).to(4, { x:[x1, x2], y:[y1, y2], depth:depth });
 		}
 	}
 }
