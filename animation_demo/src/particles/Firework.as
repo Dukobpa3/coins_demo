@@ -24,10 +24,10 @@ package particles
 		{
 			counter = new Blast( 700 );
 
-			addInitializer( new SharedImage( new Dot( 1 ) ) );
+			addInitializer( new SharedImage( new Dot( dot ) ) );
 			addInitializer( new ColorInit( color1, color2 ) );
 			addInitializer( new Velocity( new DiscZone( new Point( 0, 0 ), 200, 120 ) ) );
-			addInitializer( new Lifetime( dot ) );
+			addInitializer( new Lifetime( 2 ) );
 
 			addAction( new Age( Quadratic.easeIn ) );
 			addAction( new Move() );
