@@ -34,7 +34,8 @@ package
 		private var _animationPanel:AnimationPanel;
 		private var _startBtn:Button;
 
-		private var _emitter:Emitter2D
+		private var _renderer:BitmapRenderer
+
 
 
 		public function AnimationDemo()
@@ -93,24 +94,36 @@ package
 			addChildAt(_animationPanel, 0);
 			_animationPanel.init();
 
-			_emitter = new Firework();
-			_emitter.addEventListener( EmitterEvent.EMITTER_EMPTY, launchFirework, false, 0, true );
 
-			var renderer:BitmapRenderer = new BitmapRenderer( new Rectangle( 0, 0, Config.SIZE.x, Config.SIZE.y ) );
-			renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
-			renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
-			renderer.addEmitter( _emitter );
-			addChild( renderer );
+
+			_renderer = new BitmapRenderer( new Rectangle( 0, 0, Config.SIZE.x, Config.SIZE.y ) );
+			_renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
+			_renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
+			addChild( _renderer );
+
+			GlobalTimer.getInstance().addTimerCallback(launchFirework);
 
 			launchFirework(null);
 		}
 
-		private function launchFirework(event:EmitterEvent):void
+		private function launchFirework(date:Date):void
 		{
-			_emitter.x = Math.random() * 400 + 200;
-			_emitter.y = Math.random() * 300 + 150;
+			var color1:uint = Math.random() * 0xffffffff;
+			var color2:uint = Math.random() * 0xffffffff;
+			var emitter:Emitter2D = new Firework(color1, color2);
+			emitter.addEventListener( EmitterEvent.EMITTER_EMPTY, removeFirework, false, 0, true );
 
-			_emitter.start();
+			emitter.x = Math.random() * Config.SIZE.x;
+			emitter.y = Math.random() * Config.SIZE.y;
+
+			_renderer.addEmitter( emitter );
+
+			emitter.start();
+		}
+
+		private function removeFirework(event:EmitterEvent):void
+		{
+			_renderer.removeEmitter(event.currentTarget as Emitter2D);
 		}
 	}
 }
