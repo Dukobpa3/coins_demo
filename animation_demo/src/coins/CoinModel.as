@@ -30,16 +30,9 @@ package coins
 			frame = Math.random() * totalFrames;
 		}
 
-		internal function move():void
-		{
-			y += 20 * depth;
-			if (y >= 600) y = -102;
-			nextFrame();
-		}
-
 		internal function nextFrame():void
 		{
-			frame ++;
+			frame += 1;
 			if(frame >= totalFrames) frame = 0;
 		}
 	}

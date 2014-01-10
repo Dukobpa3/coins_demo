@@ -6,6 +6,7 @@ package coins
 	import flash.system.LoaderContext;
 
 	import gd.eggs.loading.BulkLoader;
+	import gd.eggs.loading.BulkProgressEvent;
 	import gd.eggs.loading.loadingtypes.LoadingItem;
 
 
@@ -23,6 +24,12 @@ package coins
 
 		public static function init():void
 		{
+			if (_bulkLoader)
+			{
+				dispatcher.dispatchEvent(new BulkProgressEvent(BulkLoader.COMPLETE));
+				return;
+			}
+
 			_bulkLoader = BulkLoader.getLoader(LOADER_NAME);
 			_bulkLoader.addEventListener(BulkLoader.COMPLETE, dispatcher.dispatchEvent);
 			_bulkLoader.addEventListener(BulkLoader.PROGRESS, dispatcher.dispatchEvent);

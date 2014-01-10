@@ -62,6 +62,14 @@ package
 			addChild(_startBtn);
 
 			GlobalTimer.updateDate(new Date());
+
+			_animationPanel = new AnimationPanel();
+			_animationPanel.addEventListener(Event.COMPLETE, onAnimationComplete);
+
+			_renderer = new BitmapRenderer( new Rectangle( 0, 0, Config.SIZE.x, Config.SIZE.y ) );
+			_renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
+			_renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
+
 		}
 
 		private function onStartClick(event:MouseEvent):void
@@ -90,27 +98,28 @@ package
 		{
 			this.graphics.clear();
 
-			_animationPanel = new AnimationPanel();
-			addChildAt(_animationPanel, 0);
 			_animationPanel.init();
+			addChildAt(_animationPanel, 0);
 
-
-
-			_renderer = new BitmapRenderer( new Rectangle( 0, 0, Config.SIZE.x, Config.SIZE.y ) );
-			_renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
-			_renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
 			addChild( _renderer );
 
 			GlobalTimer.getInstance().addTimerCallback(launchFirework);
+		}
 
-			launchFirework(null);
+		private function onAnimationComplete(event:Event):void
+		{
+			_animationPanel.clean();
+			_startBtn.visible = true;
+
+			GlobalTimer.getInstance().removeTimerCallback(launchFirework);
 		}
 
 		private function launchFirework(date:Date):void
 		{
 			var color1:uint = Math.random() * 0xffffffff;
 			var color2:uint = Math.random() * 0xffffffff;
-			var emitter:Emitter2D = new Firework(color1, color2);
+			var dot:int = (Math.random() * 100) > 50 ? 2 : 1;
+			var emitter:Emitter2D = new Firework(color1, color2, dot);
 			emitter.addEventListener( EmitterEvent.EMITTER_EMPTY, removeFirework, false, 0, true );
 
 			emitter.x = Math.random() * Config.SIZE.x;
@@ -123,7 +132,9 @@ package
 
 		private function removeFirework(event:EmitterEvent):void
 		{
-			_renderer.removeEmitter(event.currentTarget as Emitter2D);
+			var emitter:Emitter2D = event.currentTarget as Emitter2D;
+			emitter.removeEventListener(EmitterEvent.EMITTER_EMPTY, removeFirework);
+			_renderer.removeEmitter(emitter);
 		}
 	}
 }

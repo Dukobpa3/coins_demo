@@ -20,15 +20,14 @@ package particles
 
 	public class Firework extends Emitter2D
 	{
-		public function Firework(color1:uint, color2:uint)
+		public function Firework(color1:uint = 0xFFFFFF00, color2:uint = 0xFFFF6600, dot:int = 2)
 		{
 			counter = new Blast( 700 );
 
-			addInitializer( new SharedImage( new Dot( 2 ) ) );
-			//addInitializer( new ColorInit( 0xFFFFFF00, 0xFFFF6600 ) );
+			addInitializer( new SharedImage( new Dot( 1 ) ) );
 			addInitializer( new ColorInit( color1, color2 ) );
 			addInitializer( new Velocity( new DiscZone( new Point( 0, 0 ), 200, 120 ) ) );
-			addInitializer( new Lifetime( 2 ) );
+			addInitializer( new Lifetime( dot ) );
 
 			addAction( new Age( Quadratic.easeIn ) );
 			addAction( new Move() );

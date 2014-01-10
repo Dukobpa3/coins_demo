@@ -4,6 +4,7 @@ package coins
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.events.Event;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -25,20 +26,22 @@ package coins
 		private var _counter:TextField;
 		private var _date:int;
 
+		private var _tweenNow:int;
+
 		public function AnimationPanel() { }
 
 		public function init():void
 		{
-			_coins = new Vector.<CoinModel>();
-			_unsorted = new Vector.<CoinModel>();
+			_coins ||= new Vector.<CoinModel>();
+			_unsorted ||= new Vector.<CoinModel>();
 
-			_globalTimer = GlobalTimer.getInstance();
+			_globalTimer ||= GlobalTimer.getInstance();
 
-			_counter = new TextField();
+			_counter ||= new TextField();
 			_counter.defaultTextFormat = new TextFormat("_sans", 14, 0xff0000, true);
 			_counter.autoSize = TextFieldAutoSize.LEFT;
 
-			bitmapData = new BitmapData(Config.SIZE.x, Config.SIZE.y, true, 0xaaaaaa);
+			bitmapData ||= new BitmapData(Config.SIZE.x, Config.SIZE.y, true, 0xaaaaaa);
 			smoothing = true;
 
 			addCoins();
@@ -50,7 +53,7 @@ package coins
 
 		private function addCoins():void
 		{
-			for (var i:int = 0; i < 400; i++)
+			for (var i:int = 0; i < 500; i++)
 			{
 				// for gold rain
 				// var pos:Point = new Point(
@@ -136,7 +139,26 @@ package coins
 			var y1:int = -Config.SIZE.y * 1.2;
 			var y2:int = Config.SIZE.y + 102;
 
-			eaze(coin).to(4, { x:[x1, x2], y:[y1, y2], depth:depth });
+			eaze(coin).to(3, { x:[x1, x2], y:[y1, y2], depth:depth }).onComplete(onCoinTweenComplete);
+			_tweenNow ++;
+		}
+
+		private function onCoinTweenComplete():void
+		{
+			_tweenNow --;
+			if (!_tweenNow) dispatchEvent(new Event(Event.COMPLETE));
+		}
+
+		public function clean():void
+		{
+			_globalTimer.removeFrameCallback(onFrame);
+			_tweenNow = 0;
+			_currentStart = 0;
+
+			bitmapData.fillRect(new Rectangle(0, 0, Config.SIZE.x, Config.SIZE.y), 0x00000000);
+
+			while (_coins.length) _coins.pop();
+			while (_unsorted.length) _unsorted.pop();
 		}
 	}
 }
