@@ -1,0 +1,6 @@
+[submodule "eggs/eggs-animation-as3"]
+	path = eggs/eggs-animation-as3
+	url = git@github.com:eggs-gd/eggs-animation-as3.git
+[submodule "eggs/eggs-utils-as3"]
+	path = eggs/eggs-utils-as3
+	url = git@github.com:eggs-gd/eggs-utils-as3.git
