@@ -1,5 +1,4 @@
-package gd.eggs.util
-{
+package utils {
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
@@ -118,14 +117,12 @@ package gd.eggs.util
 		 */
 		public function addTimerCallback(func:Function):void
 		{
-			if (!_synced) updateDate(new Date());
-
 			if (_timerCallBacks.indexOf(func) == -1)
 			{
 				_timerCallBacks.push(func);
 			}
 
-			if (!_timer.hasEventListener(TimerEvent.TIMER))
+			if (_synced && !_timer.hasEventListener(TimerEvent.TIMER))
 			{
 				_timer.addEventListener(TimerEvent.TIMER, onTimer);
 				_timer.start();

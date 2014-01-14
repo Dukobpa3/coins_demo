@@ -1,9 +1,12 @@
-package coins
+/**
+ * Created by oburdun on 1/14/14.
+ */
+package text_anim
 {
 	import flash.geom.Point;
 
 
-	public class CoinModel
+	public class TextModel
 	{
 		public var id:String;
 		public var frame:int;
@@ -14,14 +17,14 @@ package coins
 		public var depth:Number;
 
 
-		public function CoinModel(id:String, totalFrames:int, pos:Point, depth:Number)
+		public function TextModel(id:String, totalFrames:int, pos:Point, depth:Number)
 		{
 			this.id = id;
 			this.x = pos.x;
 			this.y = pos.y;
 			this.depth = depth;
 			this.totalFrames = totalFrames;
-			this.frame = Math.random() * totalFrames;
+			this.frame = 0;
 		}
 
 		internal function nextFrame():void

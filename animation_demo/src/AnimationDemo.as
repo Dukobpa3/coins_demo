@@ -1,9 +1,13 @@
 package
 {
-	import coins.AnimationPanel;
+	import coins.CoinsPanel;
 	import coins.CoinsFactory;
 
+	import fireworks.FireworksPanel;
+
 	import fl.controls.Button;
+
+	import flash.display.BlendMode;
 
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -11,31 +15,26 @@ package
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.ProgressEvent;
-	import flash.filters.BlurFilter;
-	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Rectangle;
 	import flash.system.Security;
 
 	import gd.eggs.loading.BulkProgressEvent;
 
-	import gd.eggs.util.GlobalTimer;
+	import letters.LettersPanel;
 
-	import org.flintparticles.common.events.EmitterEvent;
+	import text_anim.TextFactory;
 
-	import org.flintparticles.twoD.emitters.Emitter2D;
-	import org.flintparticles.twoD.renderers.BitmapRenderer;
-
-	import particles.Firework;
+	import text_anim.TextPanel;
 
 
 	[SWF (width=800, height=600, backgroundColor=0xaaaaaa, frameRate=40)]
 	public class AnimationDemo extends Sprite
 	{
-		private var _animationPanel:AnimationPanel;
+		private var _coinsPanel:CoinsPanel;
+		private var _textPanel:TextPanel;
+		private var _fireworksPanel:FireworksPanel;
+
 		private var _startBtn:Button;
-
-		private var _renderer:BitmapRenderer
-
 
 
 		public function AnimationDemo()
@@ -60,25 +59,31 @@ package
 			_startBtn.y = (stage.stageHeight - _startBtn.height) * 0.5;
 
 			addChild(_startBtn);
-
-			GlobalTimer.updateDate(new Date());
-
-			_animationPanel = new AnimationPanel();
-			_animationPanel.addEventListener(Event.COMPLETE, onAnimationComplete);
-
-			_renderer = new BitmapRenderer( new Rectangle( 0, 0, Config.SIZE.x, Config.SIZE.y ) );
-			_renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
-			_renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
-
 		}
 
 		private function onStartClick(event:MouseEvent):void
 		{
-			_startBtn.visible = false;
+			removeChild(_startBtn);
+
+			_coinsPanel ||= new CoinsPanel();
+			_coinsPanel.addEventListener(Event.COMPLETE, onAnimationComplete);
+			_coinsPanel.cacheAsBitmap = true;
+
+			_textPanel ||= new TextPanel();
+			_textPanel.cacheAsBitmap = true;
+
+			_fireworksPanel ||= new FireworksPanel();
+			_fireworksPanel.blendMode = BlendMode.ADD;
+			_fireworksPanel.cacheAsBitmap = true;
+
 
 			CoinsFactory.dispatcher.addEventListener(Event.COMPLETE, onAllLoaded);
 			CoinsFactory.dispatcher.addEventListener(ProgressEvent.PROGRESS, onProgress);
 			CoinsFactory.init();
+
+			TextFactory.dispatcher.addEventListener(Event.COMPLETE, onAllLoaded);
+			TextFactory.dispatcher.addEventListener(ProgressEvent.PROGRESS, onProgress);
+			TextFactory.init();
 		}
 
 		private function onProgress(event:BulkProgressEvent):void
@@ -90,51 +95,35 @@ package
 
 			this.graphics.lineStyle();
 			this.graphics.beginFill(0x00ff00);
-			this.graphics.drawRoundRect(rect.x + 1, rect.y + 1, rect.width * CoinsFactory.percentLoaded, 18, 3);
+			this.graphics.drawRoundRect(rect.x + 1, rect.y + 1, rect.width * Math.min(CoinsFactory.percentLoaded, TextFactory.percentLoaded), 18, 3);
 			this.graphics.endFill();
 		}
 
 		private function onAllLoaded(event:BulkProgressEvent):void
 		{
+			if (CoinsFactory.percentLoaded < 1 || TextFactory.percentLoaded < 1) return;
+
 			this.graphics.clear();
 
-			_animationPanel.init();
-			addChildAt(_animationPanel, 0);
+			_coinsPanel.start();
+			_textPanel.start();
+			_fireworksPanel.start();
 
-			addChild( _renderer );
-
-			GlobalTimer.getInstance().addTimerCallback(launchFirework);
+			addChild(_coinsPanel);
+			addChild(_textPanel);
+			addChild(_fireworksPanel);
 		}
 
 		private function onAnimationComplete(event:Event):void
 		{
-			_animationPanel.clean();
-			_startBtn.visible = true;
+			_coinsPanel.clean();
+			_fireworksPanel.stop();
 
-			GlobalTimer.getInstance().removeTimerCallback(launchFirework);
-		}
+			removeChild(_coinsPanel);
+			removeChild(_textPanel);
+			removeChild(_fireworksPanel);
 
-		private function launchFirework(date:Date):void
-		{
-			var color1:uint = Math.random() * 0xffffffff;
-			var color2:uint = Math.random() * 0xffffffff;
-			var dot:int = (Math.random() * 100) > 50 ? 2 : 1;
-			var emitter:Emitter2D = new Firework(color1, color2, dot);
-			emitter.addEventListener( EmitterEvent.EMITTER_EMPTY, removeFirework, false, 0, true );
-
-			emitter.x = Math.random() * Config.SIZE.x;
-			emitter.y = Math.random() * Config.SIZE.y;
-
-			_renderer.addEmitter( emitter );
-
-			emitter.start();
-		}
-
-		private function removeFirework(event:EmitterEvent):void
-		{
-			var emitter:Emitter2D = event.currentTarget as Emitter2D;
-			emitter.removeEventListener(EmitterEvent.EMITTER_EMPTY, removeFirework);
-			_renderer.removeEmitter(emitter);
+			addChild(_startBtn);
 		}
 	}
 }

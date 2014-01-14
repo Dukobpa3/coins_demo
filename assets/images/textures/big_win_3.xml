@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:e25286ae0b5ec71af141f79431fbc1fe:f41a7d7c9e368da1e2f3b3c2b00e59a8:068616d196977cd1559f3207ff4de440$ -->
+<TextureAtlas imagePath="big_win_3.png">
+    <SubTexture name="big_win_00029" x="1512" y="1698" width="300" height="336" frameX="-232" frameY="-64" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00030" x="858" y="344" width="284" height="338" frameX="-238" frameY="-64" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00031" x="278" y="1036" width="270" height="342" frameX="-244" frameY="-60" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00046" x="816" y="1032" width="268" height="340" frameX="-245" frameY="-62" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00047" x="2" y="1380" width="272" height="342" frameX="-243" frameY="-60" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00048" x="2" y="1036" width="274" height="342" frameX="-243" frameY="-54" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00053" x="1742" y="2" width="304" height="332" frameX="-218" frameY="-72" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00058" x="1368" y="1022" width="310" height="336" frameX="-212" frameY="-71" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00059" x="1422" y="682" width="310" height="336" frameX="-212" frameY="-71" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00060" x="1430" y="342" width="310" height="336" frameX="-212" frameY="-71" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00061" x="1734" y="680" width="310" height="336" frameX="-212" frameY="-72" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00089" x="262" y="2" width="306" height="342" frameX="-255" frameY="-58" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00090" x="840" y="688" width="304" height="338" frameX="-254" frameY="-59" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00091" x="1724" y="1356" width="298" height="336" frameX="-255" frameY="-57" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00098" x="1110" y="2" width="284" height="338" frameX="-257" frameY="-46" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00099" x="1144" y="342" width="284" height="338" frameX="-257" frameY="-45" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00100" x="554" y="690" width="284" height="340" frameX="-257" frameY="-44" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00101" x="1396" y="2" width="284" height="338" frameX="-257" frameY="-45" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00102" x="856" y="1374" width="284" height="338" frameX="-257" frameY="-46" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00111" x="550" y="1380" width="304" height="340" frameX="-255" frameY="-58" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00112" x="2" y="348" width="308" height="342" frameX="-253" frameY="-58" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00136" x="1196" y="1708" width="314" height="336" frameX="-213" frameY="-72" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00137" x="1734" y="1018" width="310" height="336" frameX="-212" frameY="-71" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00138" x="1412" y="1360" width="310" height="336" frameX="-212" frameY="-71" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00142" x="886" y="1714" width="308" height="332" frameX="-214" frameY="-73" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00144" x="1742" y="336" width="304" height="330" frameX="-217" frameY="-74" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00147" x="588" y="1722" width="296" height="324" frameX="-224" frameY="-73" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00154" x="2" y="1724" width="294" height="322" frameX="-245" frameY="-69" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00156" x="298" y="1724" width="288" height="322" frameX="-244" frameY="-68" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00163" x="276" y="1380" width="272" height="342" frameX="-244" frameY="-55" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00173" x="1142" y="1368" width="268" height="338" frameX="-244" frameY="-64" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00180" x="1086" y="1028" width="280" height="338" frameX="-246" frameY="-61" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00181" x="2" y="692" width="280" height="342" frameX="-246" frameY="-60" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00182" x="578" y="346" width="278" height="340" frameX="-246" frameY="-59" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00184" x="1146" y="682" width="274" height="338" frameX="-245" frameY="-60" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00185" x="836" y="2" width="272" height="340" frameX="-245" frameY="-59" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00186" x="284" y="692" width="268" height="342" frameX="-246" frameY="-58" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00187" x="312" y="346" width="264" height="342" frameX="-247" frameY="-58" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00188" x="570" y="2" width="264" height="342" frameX="-247" frameY="-58" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00189" x="550" y="1036" width="264" height="342" frameX="-247" frameY="-57" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00190" x="2" y="2" width="258" height="344" frameX="-246" frameY="-57" frameWidth="800" frameHeight="632"/>
+</TextureAtlas>

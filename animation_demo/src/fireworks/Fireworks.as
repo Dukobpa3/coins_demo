@@ -1,11 +1,10 @@
-package particles
+package fireworks
 {
 	import org.flintparticles.common.actions.Age;
 	import org.flintparticles.common.actions.Fade;
 	import org.flintparticles.common.counters.Blast;
 	import org.flintparticles.common.displayObjects.Dot;
 	import org.flintparticles.common.easing.Quadratic;
-	import org.flintparticles.common.events.EmitterEvent;
 	import org.flintparticles.common.initializers.ColorInit;
 	import org.flintparticles.common.initializers.Lifetime;
 	import org.flintparticles.common.initializers.SharedImage;
@@ -18,9 +17,9 @@ package particles
 
 	import flash.geom.Point;
 
-	public class Firework extends Emitter2D
+	public class Fireworks extends Emitter2D
 	{
-		public function Firework(color1:uint = 0xFFFFFF00, color2:uint = 0xFFFF6600, dot:int = 2)
+		public function Fireworks(color1:uint = 0xFFFFFF00, color2:uint = 0xFFFF6600, dot:int = 2)
 		{
 			counter = new Blast( 700 );
 

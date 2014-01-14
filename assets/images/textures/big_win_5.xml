@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:e25286ae0b5ec71af141f79431fbc1fe:f41a7d7c9e368da1e2f3b3c2b00e59a8:068616d196977cd1559f3207ff4de440$ -->
+<TextureAtlas imagePath="big_win_5.png">
+    <SubTexture name="big_win_00017" x="532" y="644" width="262" height="310" frameX="-234" frameY="-83" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00174" x="2" y="338" width="266" height="332" frameX="-245" frameY="-62" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00175" x="532" y="2" width="266" height="320" frameX="-245" frameY="-62" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00176" x="270" y="324" width="266" height="318" frameX="-244" frameY="-61" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00177" x="264" y="672" width="266" height="322" frameX="-244" frameY="-62" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00191" x="2" y="672" width="260" height="326" frameX="-244" frameY="-55" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="big_win_00192" x="2" y="2" width="266" height="334" frameX="-240" frameY="-51" frameWidth="800" frameHeight="632"/>
+</TextureAtlas>

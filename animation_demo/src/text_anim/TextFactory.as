@@ -1,4 +1,4 @@
-package coins
+package text_anim
 {
 	import flash.display.BitmapData;
 	import flash.events.Event;
@@ -10,9 +10,9 @@ package coins
 	import gd.eggs.loading.loadingtypes.LoadingItem;
 
 
-	public class CoinsFactory
+	public class TextFactory
 	{
-		private static const LOADER_NAME:String = "coinsBulkLoader";
+		private static const LOADER_NAME:String = "textBulkLoader";
 
 		private static var _frames:Object;
 
@@ -35,16 +35,14 @@ package coins
 			_bulkLoader.addEventListener(BulkLoader.PROGRESS, dispatcher.dispatchEvent);
 
 			_frames = {};
-			_frames["01"] = new Vector.<BitmapData>(Config.COIN1_FRAMES_NUM);
-			_frames["02"] = new Vector.<BitmapData>(Config.COIN2_FRAMES_NUM);
-			_frames["03"] = new Vector.<BitmapData>(Config.COIN3_FRAMES_NUM);
+			_frames["big_win"] = new Vector.<BitmapData>(Config.BIG_WIN_FRAMES_NUM);
 
 			for (var id:String in _frames)
 			{
-				for (var i:int = 0 ; i < Config.FRAMES_BY_ID[id] ; i ++)
+				for (var i:int = 0 ; i < Config.BIG_WIN_FRAMES_NUM ; i ++)
 				{
 					_queue ++;
-					var url:String = "c_" + id + "/c_" + id + "_" + toFiveDigits(i) + ".png";
+					var url:String = "txt/" + id + "_" + toFiveDigits(i) + ".png";
 					var loaderId:String = id + ":" + i.toString();
 
 					var context:LoaderContext = new LoaderContext();
