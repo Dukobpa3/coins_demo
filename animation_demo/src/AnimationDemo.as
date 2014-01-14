@@ -1,7 +1,6 @@
 package
 {
-	import coins.CoinsPanel;
-	import coins.CoinsFactory;
+	import movieclips.McPanel;
 
 	import fireworks.FireworksPanel;
 
@@ -20,18 +19,15 @@ package
 
 	import gd.eggs.loading.BulkProgressEvent;
 
-	import letters.LettersPanel;
-
-	import text_anim.TextFactory;
-
-	import text_anim.TextPanel;
+	import movieclips.McFactory;
+	import movieclips.McPanel2;
 
 
 	[SWF (width=800, height=600, backgroundColor=0xaaaaaa, frameRate=40)]
 	public class AnimationDemo extends Sprite
 	{
-		private var _coinsPanel:CoinsPanel;
-		private var _textPanel:TextPanel;
+		private var _coinsPanel:McPanel;
+		private var _coinsPanel2:McPanel2;
 		private var _fireworksPanel:FireworksPanel;
 
 		private var _startBtn:Button;
@@ -65,25 +61,22 @@ package
 		{
 			removeChild(_startBtn);
 
-			_coinsPanel ||= new CoinsPanel();
+			_coinsPanel ||= new McPanel();
 			_coinsPanel.addEventListener(Event.COMPLETE, onAnimationComplete);
 			_coinsPanel.cacheAsBitmap = true;
 
-			_textPanel ||= new TextPanel();
-			_textPanel.cacheAsBitmap = true;
+			_coinsPanel2 ||= new McPanel2();
+			_coinsPanel2.addEventListener(Event.COMPLETE, onAnimationComplete);
+			_coinsPanel2.cacheAsBitmap = true;
 
 			_fireworksPanel ||= new FireworksPanel();
 			_fireworksPanel.blendMode = BlendMode.ADD;
 			_fireworksPanel.cacheAsBitmap = true;
 
 
-			CoinsFactory.dispatcher.addEventListener(Event.COMPLETE, onAllLoaded);
-			CoinsFactory.dispatcher.addEventListener(ProgressEvent.PROGRESS, onProgress);
-			CoinsFactory.init();
-
-			TextFactory.dispatcher.addEventListener(Event.COMPLETE, onAllLoaded);
-			TextFactory.dispatcher.addEventListener(ProgressEvent.PROGRESS, onProgress);
-			TextFactory.init();
+			McFactory.dispatcher.addEventListener(Event.COMPLETE, onAllLoaded);
+			McFactory.dispatcher.addEventListener(ProgressEvent.PROGRESS, onProgress);
+			McFactory.init();
 		}
 
 		private function onProgress(event:BulkProgressEvent):void
@@ -95,32 +88,31 @@ package
 
 			this.graphics.lineStyle();
 			this.graphics.beginFill(0x00ff00);
-			this.graphics.drawRoundRect(rect.x + 1, rect.y + 1, rect.width * Math.min(CoinsFactory.percentLoaded, TextFactory.percentLoaded), 18, 3);
+			this.graphics.drawRoundRect(rect.x + 1, rect.y + 1, rect.width * McFactory.percentLoaded, 18, 3);
 			this.graphics.endFill();
 		}
 
 		private function onAllLoaded(event:BulkProgressEvent):void
 		{
-			if (CoinsFactory.percentLoaded < 1 || TextFactory.percentLoaded < 1) return;
-
 			this.graphics.clear();
 
-			_coinsPanel.start();
-			_textPanel.start();
+			//_coinsPanel.start();
+			_coinsPanel2.start();
 			_fireworksPanel.start();
 
-			addChild(_coinsPanel);
-			addChild(_textPanel);
+			//addChild(_coinsPanel);
+			addChild(_coinsPanel2);
 			addChild(_fireworksPanel);
 		}
 
 		private function onAnimationComplete(event:Event):void
 		{
-			_coinsPanel.clean();
+			//_coinsPanel.clean();
+			_coinsPanel2.clean();
 			_fireworksPanel.stop();
 
-			removeChild(_coinsPanel);
-			removeChild(_textPanel);
+			//removeChild(_coinsPanel);
+			removeChild(_coinsPanel2);
 			removeChild(_fireworksPanel);
 
 			addChild(_startBtn);

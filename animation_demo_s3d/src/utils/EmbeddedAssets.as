@@ -15,16 +15,16 @@ package utils
         
         // Texture Atlas
         
-        [Embed(source="/atlas.xml", mimeType="application/octet-stream")]
+        [Embed(source="../../../assets/images/textures/atlas.xml", mimeType="application/octet-stream")]
         public static const atlas_xml:Class;
 
-        [Embed(source="/atlas.png")]
+        [Embed(source="../../../assets/images/textures/atlas.png")]
         public static const atlas:Class;
 
-	    [Embed(source="/coin.xml", mimeType="application/octet-stream")]
+	    [Embed(source="../../../assets/images/textures/coin.xml", mimeType="application/octet-stream")]
 	    public static const coin_xml:Class;
 
-	    [Embed(source="/coin.png")]
+	    [Embed(source="../../../assets/images/textures/coin.png")]
 	    public static const coin:Class;
     }
 }

@@ -1,4 +1,4 @@
-package text_anim
+package movieclips
 {
 	import flash.display.BitmapData;
 	import flash.events.Event;
@@ -10,9 +10,9 @@ package text_anim
 	import gd.eggs.loading.loadingtypes.LoadingItem;
 
 
-	public class TextFactory
+	public class McFactory
 	{
-		private static const LOADER_NAME:String = "textBulkLoader";
+		private static const LOADER_NAME:String = "mcBulkLoader";
 
 		private static var _frames:Object;
 
@@ -35,22 +35,38 @@ package text_anim
 			_bulkLoader.addEventListener(BulkLoader.PROGRESS, dispatcher.dispatchEvent);
 
 			_frames = {};
-			_frames["big_win"] = new Vector.<BitmapData>(Config.BIG_WIN_FRAMES_NUM);
-
+			_frames["01"] = new Vector.<BitmapData>(Config.COINS_FRAMES_BY_ID["01"]);
+			_frames["02"] = new Vector.<BitmapData>(Config.COINS_FRAMES_BY_ID["02"]);
+			_frames["03"] = new Vector.<BitmapData>(Config.COINS_FRAMES_BY_ID["03"]);
+			var context:LoaderContext = new LoaderContext();
 			for (var id:String in _frames)
 			{
-				for (var i:int = 0 ; i < Config.BIG_WIN_FRAMES_NUM ; i ++)
+				for (var i:int = 0 ; i < Config.COINS_FRAMES_BY_ID[id] ; i ++)
 				{
 					_queue ++;
-					var url:String = "txt/" + id + "_" + toFiveDigits(i) + ".png";
+					var url:String = Config.ASSETS_ROOT + "images/coin/c_" + id + "/c_" + id + "_" + toFiveDigits(i) + ".png";
 					var loaderId:String = id + ":" + i.toString();
 
-					var context:LoaderContext = new LoaderContext();
 					var loader:LoadingItem = _bulkLoader.add(url, { id:loaderId, context:context} );
 					loader.addEventListener(Event.COMPLETE, onFrameLoadComplete);
 					loader.load();
 				}
 			}
+
+			_frames["big_win"] = new Vector.<BitmapData>(Config.BIG_WIN_FRAMES_NUM);
+			id = "big_win";
+			for (i = 0 ; i < Config.BIG_WIN_FRAMES_NUM ; i ++)
+			{
+				_queue ++;
+				url = Config.ASSETS_ROOT + "images/win_big/txt/" + id + "_" + toFiveDigits(i) + ".png";
+				loaderId = id + ":" + i.toString();
+
+
+				loader = _bulkLoader.add(url, { id:loaderId, context:context} );
+				loader.addEventListener(Event.COMPLETE, onFrameLoadComplete);
+				loader.load();
+			}
+
 		}
 
 		public static function getFrame(id:String, frame:int):BitmapData

@@ -23,20 +23,20 @@ package fireworks
 
 		public function FireworksPanel()
 		{
-			_renderer = new BitmapRenderer( new Rectangle( 0, 0, Config.SIZE.x, Config.SIZE.y ) );
+			_renderer = new BitmapRenderer( new Rectangle( 0, 0, Config.SCREEN_SIZE.x, Config.SCREEN_SIZE.y ) );
 			_renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
 			_renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
 		}
 
 		public function start():void
 		{
-			GlobalTimer.getInstance().addTimerCallback(launchFirework);
+			GlobalTimer.addTimerCallback(launchFirework);
 			addChild(_renderer);
 		}
 
 		public function stop():void
 		{
-			GlobalTimer.getInstance().removeTimerCallback(launchFirework);
+			GlobalTimer.removeTimerCallback(launchFirework);
 			removeChild(_renderer);
 		}
 
@@ -48,8 +48,8 @@ package fireworks
 			var emitter:Emitter2D = new Fireworks(color1, color2, dot);
 			emitter.addEventListener( EmitterEvent.EMITTER_EMPTY, removeFirework, false, 0, true );
 
-			emitter.x = Math.random() * Config.SIZE.x;
-			emitter.y = Math.random() * Config.SIZE.y;
+			emitter.x = Math.random() * Config.SCREEN_SIZE.x;
+			emitter.y = Math.random() * Config.SCREEN_SIZE.y;
 
 			_renderer.addEmitter( emitter );
 

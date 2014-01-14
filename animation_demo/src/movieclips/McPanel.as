@@ -1,4 +1,4 @@
-package coins
+package movieclips
 {
 	import aze.motion.eaze;
 
@@ -16,49 +16,49 @@ package coins
 	import gd.eggs.util.GlobalTimer;
 
 
-	public class CoinsPanel extends Bitmap
+	public class McPanel extends Bitmap
 	{
-		private var _coins:Vector.<CoinModel>;
-		private var _unsorted:Vector.<CoinModel>;
-		private var _currentStart:int;
-		private var _globalTimer:GlobalTimer;
+		private var _coins:Vector.<McModel>;
+		private var _unsorted:Vector.<McModel>;
+		private var _text:McModel;
 
 		private var _counter:TextField;
 		private var _date:int;
 
 		private var _tweenNow:int;
+		private var _currentStart:int;
 
-		public function CoinsPanel()
+		public function McPanel()
 		{
-			_coins = new Vector.<CoinModel>();
-			_unsorted = new Vector.<CoinModel>();
-
-			_globalTimer = GlobalTimer.getInstance();
+			_coins = new Vector.<McModel>();
+			_unsorted = new Vector.<McModel>();
 
 			_counter = new TextField();
 			_counter.defaultTextFormat = new TextFormat("_sans", 14, 0xff0000, true);
 			_counter.autoSize = TextFieldAutoSize.LEFT;
 
-			bitmapData = new BitmapData(Config.SIZE.x, Config.SIZE.y, true, 0x00000000);
+			bitmapData = new BitmapData(Config.SCREEN_SIZE.x, Config.SCREEN_SIZE.y, true, 0x00000000);
 			smoothing = true;
 		}
 
 		public function start():void
 		{
 			addCoins();
+			_text = new McModel("big_win", Config.BIG_WIN_FRAMES_NUM, new Point(), 1);
+
 			_tweenNow = 0;
 			_currentStart = 0;
 
-			_globalTimer.addFrameCallback(onFrame);
+			GlobalTimer.addFrameCallback(onFrame);
 		}
 
 		public function clean():void
 		{
-			_globalTimer.removeFrameCallback(onFrame);
+			GlobalTimer.removeFrameCallback(onFrame);
 			_tweenNow = 0;
 			_currentStart = 0;
 
-			bitmapData.fillRect(new Rectangle(0, 0, Config.SIZE.x, Config.SIZE.y), 0x00000000);
+			bitmapData.fillRect(new Rectangle(0, 0, Config.SCREEN_SIZE.x, Config.SCREEN_SIZE.y), 0x00000000);
 
 			while (_coins.length) _coins.pop();
 			while (_unsorted.length) _unsorted.pop();
@@ -69,13 +69,14 @@ package coins
 			for (var i:int = 0; i < 500; i++)
 			{
 				var pos:Point = new Point(
-					Math.random() * Config.SIZE.x * 2 - Config.SIZE.x /2,
-					Config.SIZE.y + 102
+					Math.random() * Config.SCREEN_SIZE.x * 2 - Config.SCREEN_SIZE.x /2,
+					Config.SCREEN_SIZE.y + 102
 				);
 				var depth:Number = (Math.random() * 0.5) + 0.5;
 				var id:String = ["01", "02", "03"][int(Math.random() * 3)];
 
-				var coin:CoinModel = new CoinModel(id, Config.FRAMES_BY_ID[id], pos, depth);
+				var coin:McModel = new McModel(id, Config.COINS_FRAMES_BY_ID[id], pos, depth);
+				coin.gotoAndStop(Math.random() * coin.totalFrames);
 
 				_coins.push(coin);
 				_unsorted.push(coin);
@@ -84,7 +85,7 @@ package coins
 			_coins.sort(sortByDepth);
 		}
 
-		private function sortByDepth(x:CoinModel, y:CoinModel):Number
+		private function sortByDepth(x:McModel, y:McModel):Number
 		{
 			return    x.depth < y.depth ? -1
 					: x.depth > y.depth ? 1
@@ -94,12 +95,16 @@ package coins
 		private function onFrame(date:int):void
 		{
 			bitmapData.lock();
-			bitmapData.fillRect(new Rectangle(0, 0, Config.SIZE.x, Config.SIZE.y), 0x00000000);
+			bitmapData.fillRect(new Rectangle(0, 0, Config.SCREEN_SIZE.x, Config.SCREEN_SIZE.y), 0x00000000);
 
 			for (var i:int = 0; i < _coins.length; i++)
 			{
 				renderCoin(_coins[i]);
 			}
+
+			_text.nextFrame();
+			var m:Matrix = new Matrix();
+			bitmapData.draw(_text.frame, m, null, null, null, true);
 
 			_counter.text =
 				"num coins:\t"  + String(_coins.length) + "\n" +
@@ -116,7 +121,7 @@ package coins
 			tryToAddCoin();
 		}
 
-		private function renderCoin(coin:CoinModel):void
+		private function renderCoin(coin:McModel):void
 		{
 			coin.nextFrame();
 
@@ -134,21 +139,21 @@ package coins
 			c.greenOffset = Math.round(mul * 0x33);
 			c.blueOffset = Math.round(mul * 0x33);
 
-			bitmapData.draw(CoinsFactory.getFrame(coin.id, coin.frame), m, c, null, null, true);
+			bitmapData.draw(coin.frame, m, c, null, null, true);
 		}
 
 		private function tryToAddCoin():void
 		{
 			if (_currentStart >= _coins.length) return;
 
-			var coin:CoinModel = _unsorted[_currentStart ++];
+			var coin:McModel = _unsorted[_currentStart ++];
 			var depth:Number = coin.depth > 0.75 ? 0.5 : 1;
 
 			var x1:int = coin.x < 400 ? coin.x + 200 : coin.x - 200;
 			var x2:int = coin.x < 400 ? coin.x + 400 : coin.x - 400;
 
-			var y1:int = -Config.SIZE.y * 1.2;
-			var y2:int = Config.SIZE.y + 102;
+			var y1:int = -Config.SCREEN_SIZE.y * 1.2;
+			var y2:int = Config.SCREEN_SIZE.y + 102;
 
 			eaze(coin).to(3, { x:[x1, x2], y:[y1, y2], depth:depth }).onComplete(onCoinTweenComplete);
 			_tweenNow ++;
