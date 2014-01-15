@@ -1,6 +1,3 @@
-/**
- * Created by oburdun on 1/14/14.
- */
 package fireworks
 {
 	import flash.display.Sprite;
@@ -13,8 +10,10 @@ package fireworks
 	import org.flintparticles.common.events.EmitterEvent;
 
 	import org.flintparticles.twoD.emitters.Emitter2D;
+	import org.flintparticles.twoD.renderers.BitmapLineRenderer;
 
 	import org.flintparticles.twoD.renderers.BitmapRenderer;
+	import org.flintparticles.twoD.renderers.PixelRenderer;
 
 
 	public class FireworksPanel extends Sprite
@@ -37,7 +36,7 @@ package fireworks
 		public function stop():void
 		{
 			GlobalTimer.removeTimerCallback(launchFirework);
-			removeChild(_renderer);
+			//removeChild(_renderer);
 		}
 
 		private function launchFirework(date:Date):void
@@ -60,7 +59,8 @@ package fireworks
 		{
 			var emitter:Emitter2D = event.currentTarget as Emitter2D;
 			emitter.removeEventListener(EmitterEvent.EMITTER_EMPTY, removeFirework);
-			_renderer.removeEmitter(emitter);
+			emitter.killAllParticles();
+			//_renderer.removeEmitter(emitter);
 		}
 	}
 }

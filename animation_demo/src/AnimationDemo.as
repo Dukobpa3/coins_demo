@@ -1,7 +1,5 @@
 package
 {
-	import movieclips.McPanel;
-
 	import fireworks.FireworksPanel;
 
 	import fl.controls.Button;
@@ -20,14 +18,13 @@ package
 	import gd.eggs.loading.BulkProgressEvent;
 
 	import movieclips.McFactory;
-	import movieclips.McPanel2;
+	import movieclips.McPanel;
 
 
 	[SWF (width=800, height=600, backgroundColor=0xaaaaaa, frameRate=40)]
 	public class AnimationDemo extends Sprite
 	{
 		private var _coinsPanel:McPanel;
-		private var _coinsPanel2:McPanel2;
 		private var _fireworksPanel:FireworksPanel;
 
 		private var _startBtn:Button;
@@ -63,11 +60,8 @@ package
 
 			_coinsPanel ||= new McPanel();
 			_coinsPanel.addEventListener(Event.COMPLETE, onAnimationComplete);
+			_coinsPanel.addEventListener(McPanel.START_CLOSING, onAnimationClosing);
 			_coinsPanel.cacheAsBitmap = true;
-
-			_coinsPanel2 ||= new McPanel2();
-			_coinsPanel2.addEventListener(Event.COMPLETE, onAnimationComplete);
-			_coinsPanel2.cacheAsBitmap = true;
 
 			_fireworksPanel ||= new FireworksPanel();
 			_fireworksPanel.blendMode = BlendMode.ADD;
@@ -78,6 +72,8 @@ package
 			McFactory.dispatcher.addEventListener(ProgressEvent.PROGRESS, onProgress);
 			McFactory.init();
 		}
+
+
 
 		private function onProgress(event:BulkProgressEvent):void
 		{
@@ -96,23 +92,23 @@ package
 		{
 			this.graphics.clear();
 
-			//_coinsPanel.start();
-			_coinsPanel2.start();
+			_coinsPanel.start();
 			_fireworksPanel.start();
 
-			//addChild(_coinsPanel);
-			addChild(_coinsPanel2);
+			addChild(_coinsPanel);
 			addChild(_fireworksPanel);
+		}
+
+		private function onAnimationClosing(event:Event):void
+		{
+			_fireworksPanel.stop();
 		}
 
 		private function onAnimationComplete(event:Event):void
 		{
-			//_coinsPanel.clean();
-			_coinsPanel2.clean();
-			_fireworksPanel.stop();
+			_coinsPanel.clean();
 
-			//removeChild(_coinsPanel);
-			removeChild(_coinsPanel2);
+			removeChild(_coinsPanel);
 			removeChild(_fireworksPanel);
 
 			addChild(_startBtn);
