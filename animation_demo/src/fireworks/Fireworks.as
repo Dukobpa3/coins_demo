@@ -21,7 +21,7 @@ package fireworks
 	{
 		public function Fireworks(color1:uint = 0xFFFFFF00, color2:uint = 0xFFFF6600, dot:int = 2)
 		{
-			counter = new Blast( 700 );
+			counter = new Blast( 500 );
 
 			addInitializer( new SharedImage( new Dot( dot ) ) );
 			addInitializer( new ColorInit( color1, color2 ) );
@@ -31,7 +31,7 @@ package fireworks
 			addAction( new Age( Quadratic.easeIn ) );
 			addAction( new Move() );
 			addAction( new Fade() );
-			addAction( new Accelerate( 0, 50 ) );
+			addAction( new Accelerate( 0, 75 ) );
 			addAction( new LinearDrag( 0.5 ) );
 		}
 	}

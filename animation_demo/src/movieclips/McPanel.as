@@ -154,9 +154,9 @@ package movieclips
 			c.alphaMultiplier = 1;
 			c.alphaOffset = 0;
 
-			c.redOffset = Math.round(mul * 0x33);
-			c.greenOffset = Math.round(mul * 0x33);
-			c.blueOffset = Math.round(mul * 0x33);
+			c.redOffset = Math.round(mul * 0x22);
+			c.greenOffset = Math.round(mul * 0x22);
+			c.blueOffset = Math.round(mul * 0x22);
 
 			bitmapData.draw(coin.frame, m, c, null, null, true);
 		}
