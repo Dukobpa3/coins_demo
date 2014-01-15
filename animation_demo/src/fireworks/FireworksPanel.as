@@ -68,6 +68,7 @@ package fireworks
 			var emitter:Emitter2D = event.currentTarget as Emitter2D;
 			emitter.removeEventListener(EmitterEvent.EMITTER_EMPTY, removeFirework);
 			emitter.killAllParticles();
+			if(_renderer.emitters.length > 1) _renderer.removeEmitter(emitter);
 		}
 	}
 }
