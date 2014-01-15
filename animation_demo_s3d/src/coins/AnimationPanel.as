@@ -73,7 +73,7 @@ package coins
 			{
 				for (var i:int = 0 ; i < LAUNCH_AT_TIME ; i ++)
 				{
-					var coin:MovieClip = new MovieClip(_frames[int(Math.random() * 3)], 24);
+					var coin:MovieClip = new MovieClip(_frames[0], 24);
 					coin.scaleX = coin.scaleY = (Math.random() * 0.5) + 0.5;
 					coin.x = Math.random() * Config.SIZE.x * 2 - Config.SIZE.x /2;
 					coin.y = Config.SIZE.y + 102;

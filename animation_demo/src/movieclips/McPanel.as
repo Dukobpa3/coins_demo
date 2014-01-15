@@ -9,6 +9,7 @@ package movieclips
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
@@ -18,6 +19,9 @@ package movieclips
 	import gd.eggs.customanim.AnimationModel;
 
 	import gd.eggs.util.GlobalTimer;
+
+	import movieclips.atlas.Frame;
+	import movieclips.atlas.McModel;
 
 
 	public class McPanel extends Bitmap
@@ -49,10 +53,11 @@ package movieclips
 		{
 			_complete = false;
 
-			_text = new AnimationModel(new McModel("big_win", Config.BIG_WIN_FRAMES_NUM, new Point(), 1), false, 1, -1, 24);
+			var mcModel:McModel = new McModel("big_win", Config.BIG_WIN_FRAMES_NUM, new Point(), 1);
+			_text = new AnimationModel(mcModel, false, 1, -1, 24);
 			_text.addEventListener(Event.COMPLETE, onTextAnimationComplete);
 
-			AnimationManager.startAnimation(_text, "text");
+			AnimationManager.startAnimation(_text, _text.mc);
 
 			GlobalTimer.addFrameCallback(onFrame);
 		}
@@ -75,36 +80,8 @@ package movieclips
 
 		private function onFrame(date:int):void
 		{
-			// add coin
-			if (!_complete)
-			{
-				var pos:Point = new Point(
-						Math.random() * Config.SCREEN_SIZE.x * 2 - Config.SCREEN_SIZE.x /2,
-						Config.SCREEN_SIZE.y + 102
-				);
-				var depth:Number = (Math.random() * 0.5) + 0.5;
-				var id:String = ["01", "02", "03"][int(Math.random() * 3)];
+			if (!_complete) createCoin();
 
-				var coin:McModel = new McModel(id, Config.COINS_FRAMES_BY_ID[id], pos, depth);
-				coin.gotoAndStop(Math.random() * coin.totalFrames);
-
-				var animModel:AnimationModel = new AnimationModel(coin, true, 1, 0, 24);
-				AnimationManager.startAnimation(animModel, coin);
-
-				// eaze
-				depth = coin.depth > 0.75 ? 0.5 : 1;
-
-				var x1:int = coin.x < 400 ? coin.x + 200 : coin.x - 200;
-				var x2:int = coin.x < 400 ? coin.x + 400 : coin.x - 400;
-
-				var y1:int = -Config.SCREEN_SIZE.y * 1.2;
-				var y2:int = Config.SCREEN_SIZE.y + 102;
-
-				eaze(coin).to(3, { x:[x1, x2], y:[y1, y2], depth:depth }).onComplete(onCoinTweenComplete, animModel);
-
-				_coins.push(animModel);
-				_coins.sort(sortByDepth);
-			}
 			// draw coins
 
 			bitmapData.lock();
@@ -112,20 +89,18 @@ package movieclips
 
 			for (var i:int = 0; i < _coins.length; i++)
 			{
-				renderCoin(_coins[i].mc as McModel);
+				renderMc(_coins[i].mc as McModel);
 			}
 
 			if (!_complete)
 			{
-				var m:Matrix = new Matrix();
-				bitmapData.draw((_text.mc as McModel).frame, m, null, null, null, true);
+				renderMc(_text.mc as McModel);
 			}
 
 			_counter.text =
 				"num coins:\t"  + String(_coins.length) + "\n" +
 				"frame time:\t" + String(date - _date) + "\n" +
-				"FPS:\t\t"      + Math.round(1000 / (date - _date)).toString() + "\n" +
-				"text_FPS:\t"   + String(_text.frameRate);
+				"FPS:\t\t"      + Math.round(1000 / (date - _date)).toString() + "\n";
 
 			_date = date;
 
@@ -135,30 +110,73 @@ package movieclips
 
 		private function onCoinTweenComplete(aninModel:AnimationModel):void
 		{
-			var id:int = _coins.indexOf(aninModel);
-			_coins.splice(id, 1);
+			_coins.splice(_coins.indexOf(aninModel), 1);
 			AnimationManager.stopAnimation(aninModel.mc);
 
 			if (!_coins.length) dispatchEvent(new Event(Event.COMPLETE));
 		}
 
-		private function renderCoin(coin:McModel):void
+		private function createCoin():void
 		{
+			var pos:Point = new Point(
+					Math.random() * Config.SCREEN_SIZE.x * 2 - Config.SCREEN_SIZE.x /2,
+					Config.SCREEN_SIZE.y + 102
+			);
+			var depth:Number = (Math.random() * 0.5) + 0.5;
+			var coin:McModel = new McModel("c_01", Config.COINS_FRAMES_NUM, pos, depth);
+			coin.gotoAndStop(Math.random() * coin.totalFrames);
+
+			var animModel:AnimationModel = new AnimationModel(coin, true, 1, 0, 24);
+			AnimationManager.startAnimation(animModel, coin);
+
+			// eaze
+			depth = coin.depth > 0.75 ? 0.5 : 1;
+
+			var x1:int = coin.x < 400 ? coin.x + 200 : coin.x - 200;
+			var x2:int = coin.x < 400 ? coin.x + 400 : coin.x - 400;
+
+			var y1:int = -Config.SCREEN_SIZE.y * 1.2;
+			var y2:int = Config.SCREEN_SIZE.y + 102;
+
+			_coins.push(animModel);
+			_coins.sort(sortByDepth);
+
+			eaze(coin).to(3, { x:[x1, x2], y:[y1, y2], depth:depth }).onComplete(onCoinTweenComplete, animModel);
+		}
+
+		private function renderMc(mcModel:McModel):void
+		{
+			if(mcModel.depth != 1)
+			{
+				var c:ColorTransform = new ColorTransform();
+				var mul:Number = 1 - mcModel.depth;
+				c.redMultiplier = c.greenMultiplier = c.blueMultiplier = (1 - mul);
+				c.alphaMultiplier = 1;
+				c.alphaOffset = 0;
+
+				c.redOffset = Math.round(mul * 0x22);
+				c.greenOffset = Math.round(mul * 0x22);
+				c.blueOffset = Math.round(mul * 0x22);
+			}
+
+			var frame:Frame = mcModel.frame;
+
 			var m:Matrix = new Matrix();
-			m.scale(coin.depth, coin.depth);
-			m.translate(coin.x, coin.y);
+			m.scale(mcModel.depth, mcModel.depth);
 
-			var c:ColorTransform = new ColorTransform();
-			var mul:Number = 1 - coin.depth;
-			c.redMultiplier = c.greenMultiplier = c.blueMultiplier = (1 - mul);
-			c.alphaMultiplier = 1;
-			c.alphaOffset = 0;
+			m.translate(
+					mcModel.x - (frame.rect.x + frame.frameRect.x) * mcModel.depth,
+					mcModel.y - (frame.rect.y + frame.frameRect.y) * mcModel.depth
+			);
 
-			c.redOffset = Math.round(mul * 0x22);
-			c.greenOffset = Math.round(mul * 0x22);
-			c.blueOffset = Math.round(mul * 0x22);
+			var clipRect:Rectangle = new Rectangle(
+					mcModel.x - frame.frameRect.x * mcModel.depth,
+					mcModel.y - frame.frameRect.y * mcModel.depth,
+					frame.rect.width * mcModel.depth,
+					frame.rect.height * mcModel.depth
+			);
 
-			bitmapData.draw(coin.frame, m, c, null, null, true);
+			bitmapData.draw(frame.data, m, c, null, clipRect, true);
 		}
 
 		private function onTextAnimationComplete(event:Event):void

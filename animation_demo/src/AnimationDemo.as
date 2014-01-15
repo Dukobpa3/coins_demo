@@ -11,13 +11,10 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.events.ProgressEvent;
-	import flash.geom.Rectangle;
 	import flash.system.Security;
 
-	import gd.eggs.loading.BulkProgressEvent;
+	import movieclips.atlas.AtlasFactory;
 
-	import movieclips.McFactory;
 	import movieclips.McPanel;
 
 
@@ -48,10 +45,17 @@ package
 			_startBtn.addEventListener(MouseEvent.CLICK, onStartClick);
 
 			_startBtn.label = "Start";
-			_startBtn.x = (stage.stageWidth - _startBtn.width) * 0.5;
-			_startBtn.y = (stage.stageHeight - _startBtn.height) * 0.5;
+			_startBtn.x = (Config.SCREEN_SIZE.x - _startBtn.width) * 0.5;
+			_startBtn.y = (Config.SCREEN_SIZE.y - _startBtn.height) * 0.5;
 
 			addChild(_startBtn);
+
+			//this.graphics.beginFill(0xaaaaaa);
+			//this.graphics.drawRect(0, 0, Config.SCREEN_SIZE.x, Config.SCREEN_SIZE.y);
+			//this.graphics.endFill();
+
+
+			AtlasFactory.init();
 		}
 
 		private function onStartClick(event:MouseEvent):void
@@ -66,31 +70,6 @@ package
 			_fireworksPanel ||= new FireworksPanel();
 			_fireworksPanel.blendMode = BlendMode.ADD;
 			_fireworksPanel.cacheAsBitmap = true;
-
-
-			McFactory.dispatcher.addEventListener(Event.COMPLETE, onAllLoaded);
-			McFactory.dispatcher.addEventListener(ProgressEvent.PROGRESS, onProgress);
-			McFactory.init();
-		}
-
-
-
-		private function onProgress(event:BulkProgressEvent):void
-		{
-			var rect:Rectangle = new Rectangle(200, 290, 400, 20);
-			this.graphics.clear();
-			this.graphics.lineStyle(2);
-			this.graphics.drawRoundRect(rect.x, rect.y, rect.width, rect.height, 3);
-
-			this.graphics.lineStyle();
-			this.graphics.beginFill(0x00ff00);
-			this.graphics.drawRoundRect(rect.x + 1, rect.y + 1, rect.width * McFactory.percentLoaded, 18, 3);
-			this.graphics.endFill();
-		}
-
-		private function onAllLoaded(event:BulkProgressEvent):void
-		{
-			this.graphics.clear();
 
 			_coinsPanel.start();
 			_fireworksPanel.start();

@@ -1,15 +1,17 @@
 /**
- * Created by Dukobpa3 on 1/15/14.
+ * Created by oburdun on 1/15/14.
  */
-package movieclips
+package utils
 {
-	public class AtlasFactory
+	public class EmbeddedResources
 	{
+		// coins
 		[Embed(source="../../../assets/images/textures/coin.xml", mimeType="application/octet-stream")]
 		public static const coin_xml:Class;
 		[Embed(source="../../../assets/images/textures/coin.png")]
 		public static const coin:Class;
 
+		// big_win
 		[Embed(source="../../../assets/images/textures/big_win_0.xml", mimeType="application/octet-stream")]
 		public static const big_win_0_xml:Class;
 		[Embed(source="../../../assets/images/textures/big_win_0.png")]
@@ -40,20 +42,5 @@ package movieclips
 		[Embed(source="../../../assets/images/textures/big_win_5.png")]
 		public static const big_win_5:Class;
 
-		private static var _frames:Object;
-
-		public function AtlasFactory()
-		{
-		}
-
-		public static function init():void
-		{
-
-		}
-
-		public static function getFrame(id:String, frame:int = 0):Frame
-		{
-			return _frames[id][frame];
-		}
 	}
 }

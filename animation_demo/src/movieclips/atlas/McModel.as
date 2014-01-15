@@ -1,9 +1,12 @@
-package movieclips
+package movieclips.atlas
 {
-	import flash.display.BitmapData;
 	import flash.geom.Point;
 
 	import gd.eggs.customanim.IAnimatable;
+
+	import movieclips.atlas.AtlasFactory;
+
+	import movieclips.atlas.Frame;
 
 
 	public class McModel implements IAnimatable
@@ -49,7 +52,7 @@ package movieclips
 		public function set visible(visible:Boolean):void { }
 
 		public function get currentFrame():int { return _currentFrame + 1; }
-		public function get frame():BitmapData { return McFactory.getFrame(_id, _currentFrame); }
+		public function get frame():Frame { return AtlasFactory.getFrame(_id, _currentFrame); }
 
 		public function get totalFrames():int { return _totalFrames; }
 	}
