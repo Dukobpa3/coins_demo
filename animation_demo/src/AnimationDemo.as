@@ -13,6 +13,8 @@ package
 	import flash.events.MouseEvent;
 	import flash.system.Security;
 
+	import gd.eggs.customanim.AnimationManager;
+
 	import movieclips.atlas.AtlasFactory;
 
 	import movieclips.McPanel;
@@ -86,9 +88,12 @@ package
 		private function onAnimationComplete(event:Event):void
 		{
 			_coinsPanel.clean();
+			_fireworksPanel.clean();
 
 			removeChild(_coinsPanel);
 			removeChild(_fireworksPanel);
+
+			AnimationManager.clean();
 
 			addChild(_startBtn);
 		}

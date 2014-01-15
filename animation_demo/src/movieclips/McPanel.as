@@ -57,7 +57,7 @@ package movieclips
 			_text = new AnimationModel(mcModel, false, 1, -1, 24);
 			_text.addEventListener(Event.COMPLETE, onTextAnimationComplete);
 
-			AnimationManager.startAnimation(_text, _text.mc);
+			AnimationManager.startAnimation(_text, "big_win");
 
 			GlobalTimer.addFrameCallback(onFrame);
 		}

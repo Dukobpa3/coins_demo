@@ -39,7 +39,12 @@ package fireworks
 		public function stop():void
 		{
 			GlobalTimer.removeTimerCallback(launchFirework);
-			//removeChild(_renderer);
+		}
+
+		public function clean():void
+		{
+			for each (var emitter:Emitter2D in _renderer.emitters)
+				_renderer.removeEmitter(emitter);
 		}
 
 		private function launchFirework(date:Date):void
@@ -63,7 +68,6 @@ package fireworks
 			var emitter:Emitter2D = event.currentTarget as Emitter2D;
 			emitter.removeEventListener(EmitterEvent.EMITTER_EMPTY, removeFirework);
 			emitter.killAllParticles();
-			//_renderer.removeEmitter(emitter);
 		}
 	}
 }
