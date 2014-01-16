@@ -13,14 +13,18 @@ package
 	import flash.system.Security;
 
 	import gd.eggs.customanim.AnimationManager;
+	import gd.eggs.util.GlobalTimer;
 
 	import movieclips.McPanel;
 	import movieclips.atlas.AtlasFactory;
+
+	import utils.Counter;
 
 
 	[SWF (width=800, height=600, backgroundColor=0xaaaaaa, frameRate=40)]
 	public class AnimationDemo extends Sprite
 	{
+		private var _counter:Counter;
 		private var _coinsPanel:McPanel;
 		private var _fireworksPanel:FireworksPanel;
 
@@ -40,6 +44,9 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 
+			_counter = new Counter();
+			addChild(_counter);
+
 			_startBtn = new Button();
 
 			_startBtn.addEventListener(MouseEvent.CLICK, onStartClick);
@@ -51,6 +58,14 @@ package
 			addChild(_startBtn);
 
 			AtlasFactory.init();
+
+			GlobalTimer.addFrameCallback(onFrame);
+		}
+
+		private function onFrame(date:int):void
+		{
+			_counter.coins = _coinsPanel ? _coinsPanel.coinsNum : 0;
+			_counter.emitters = _fireworksPanel ? _fireworksPanel.emittersNum : 0;
 		}
 
 		private function onStartClick(event:MouseEvent):void
@@ -90,5 +105,6 @@ package
 
 			addChild(_startBtn);
 		}
+
 	}
 }

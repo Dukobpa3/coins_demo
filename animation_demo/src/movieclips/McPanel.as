@@ -9,6 +9,7 @@ package movieclips
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.system.System;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
@@ -28,19 +29,12 @@ package movieclips
 		private var _coins:Vector.<AnimationModel>;
 		private var _text:AnimationModel;
 
-		private var _counter:TextField;
-		private var _date:int;
-
 		private var _complete:Boolean;
 
 
 		public function McPanel()
 		{
 			_coins = new Vector.<AnimationModel>();
-
-			_counter = new TextField();
-			_counter.defaultTextFormat = new TextFormat("_sans", 14, 0xff0000, true);
-			_counter.autoSize = TextFieldAutoSize.LEFT;
 
 			bitmapData = new BitmapData(Config.SCREEN_SIZE.x, Config.SCREEN_SIZE.y, true, 0x00000000);
 			smoothing = true;
@@ -94,14 +88,6 @@ package movieclips
 				renderMc(_text.mc as McModel);
 			}
 
-			_counter.text =
-				"num coins:\t"  + String(_coins.length) + "\n" +
-				"frame time:\t" + String(date - _date) + "\n" +
-				"FPS:\t\t"      + Math.round(1000 / (date - _date)).toString() + "\n";
-
-			_date = date;
-
-			bitmapData.draw(_counter);
 			bitmapData.unlock();
 		}
 
@@ -181,5 +167,7 @@ package movieclips
 			_complete = true;
 			dispatchEvent(new Event(START_CLOSING));
 		}
+
+		public function get coinsNum():int { return _coins.length; }
 	}
 }

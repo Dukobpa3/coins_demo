@@ -63,5 +63,7 @@ package fireworks
 			emitter.killAllParticles();
 			if(_renderer.emitters.length > 1) _renderer.removeEmitter(emitter);
 		}
+
+		public function get emittersNum():int { return _renderer.emitters.length; }
 	}
 }
