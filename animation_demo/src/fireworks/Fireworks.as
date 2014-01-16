@@ -1,5 +1,7 @@
 package fireworks
 {
+	import flash.geom.Point;
+
 	import org.flintparticles.common.actions.Age;
 	import org.flintparticles.common.actions.Fade;
 	import org.flintparticles.common.counters.Blast;
@@ -15,7 +17,6 @@ package fireworks
 	import org.flintparticles.twoD.initializers.Velocity;
 	import org.flintparticles.twoD.zones.DiscZone;
 
-	import flash.geom.Point;
 
 	public class Fireworks extends Emitter2D
 	{

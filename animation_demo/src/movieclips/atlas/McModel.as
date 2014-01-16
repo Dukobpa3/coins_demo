@@ -4,10 +4,6 @@ package movieclips.atlas
 
 	import gd.eggs.customanim.IAnimatable;
 
-	import movieclips.atlas.AtlasFactory;
-
-	import movieclips.atlas.Frame;
-
 
 	public class McModel implements IAnimatable
 	{

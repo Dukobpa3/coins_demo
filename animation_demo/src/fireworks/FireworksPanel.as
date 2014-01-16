@@ -8,15 +8,8 @@ package fireworks
 	import gd.eggs.util.GlobalTimer;
 
 	import org.flintparticles.common.events.EmitterEvent;
-	import org.flintparticles.common.renderers.Renderer;
-	import org.flintparticles.common.renderers.RendererBase;
-
 	import org.flintparticles.twoD.emitters.Emitter2D;
-	import org.flintparticles.twoD.renderers.BitmapLineRenderer;
-
 	import org.flintparticles.twoD.renderers.BitmapRenderer;
-	import org.flintparticles.twoD.renderers.PixelRenderer;
-	import org.flintparticles.twoD.renderers.VectorLineRenderer;
 
 
 	public class FireworksPanel extends Sprite
@@ -25,7 +18,7 @@ package fireworks
 
 		public function FireworksPanel()
 		{
-			_renderer = new BitmapLineRenderer( new Rectangle( 0, 0, Config.SCREEN_SIZE.x, Config.SCREEN_SIZE.y ) );
+			_renderer = new BitmapRenderer( new Rectangle( 0, 0, Config.SCREEN_SIZE.x, Config.SCREEN_SIZE.y ) );
 			_renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
 			_renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
 		}

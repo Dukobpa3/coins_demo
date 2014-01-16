@@ -4,7 +4,6 @@
 package movieclips.atlas
 {
 	import flash.display.BitmapData;
-	import flash.geom.Rectangle;
 
 	import utils.EmbeddedResources;
 

@@ -5,7 +5,6 @@ package
 	import fl.controls.Button;
 
 	import flash.display.BlendMode;
-
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -15,9 +14,8 @@ package
 
 	import gd.eggs.customanim.AnimationManager;
 
-	import movieclips.atlas.AtlasFactory;
-
 	import movieclips.McPanel;
+	import movieclips.atlas.AtlasFactory;
 
 
 	[SWF (width=800, height=600, backgroundColor=0xaaaaaa, frameRate=40)]
@@ -51,11 +49,6 @@ package
 			_startBtn.y = (Config.SCREEN_SIZE.y - _startBtn.height) * 0.5;
 
 			addChild(_startBtn);
-
-			//this.graphics.beginFill(0xaaaaaa);
-			//this.graphics.drawRect(0, 0, Config.SCREEN_SIZE.x, Config.SCREEN_SIZE.y);
-			//this.graphics.endFill();
-
 
 			AtlasFactory.init();
 		}
