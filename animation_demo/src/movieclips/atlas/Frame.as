@@ -1,6 +1,3 @@
-/**
- * Created by Dukobpa3 on 1/15/14.
- */
 package movieclips.atlas
 {
 	import flash.display.BitmapData;

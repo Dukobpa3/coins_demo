@@ -16,15 +16,18 @@ package fireworks
 	{
 		private var _renderer:BitmapRenderer;
 
+		private var _emitterCounter:int;
+
 		public function FireworksPanel()
 		{
 			_renderer = new BitmapRenderer( new Rectangle( 0, 0, Config.SCREEN_SIZE.x, Config.SCREEN_SIZE.y ) );
-			_renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
-			_renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
+			//_renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
+			//_renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
 		}
 
 		public function start():void
 		{
+			_emitterCounter = 2;
 			GlobalTimer.addTimerCallback(launchFirework);
 			addChild(_renderer);
 		}
@@ -42,6 +45,9 @@ package fireworks
 
 		private function launchFirework(date:Date):void
 		{
+			if (_emitterCounter --) return;
+			else _emitterCounter = 2;
+
 			var color1:uint = Math.random() * 0xffffffff;
 			var color2:uint = Math.random() * 0xffffffff;
 			var dot:int = 2;//(Math.random() * 100) > 50 ? 2 : 1;
