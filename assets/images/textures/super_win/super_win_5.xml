@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:94afd56cb68f88ee4bcc22df60ce2eb2:b14ac726912edc9f69cd8413e9cf861c:929a25ad3ccf14f4f05bebd7ec313ed0$ -->
+<TextureAtlas imagePath="super_win_5.png">
+    <SubTexture name="Super_Win_00050" x="2" y="316" width="408" height="316" frameX="-196" frameY="-48" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00081" x="2" y="2" width="414" height="312" frameX="-198" frameY="-51" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00084" x="418" y="2" width="414" height="312" frameX="-197" frameY="-50" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00085" x="834" y="2" width="414" height="312" frameX="-197" frameY="-50" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00088" x="1250" y="2" width="414" height="312" frameX="-197" frameY="-50" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00093" x="2" y="634" width="406" height="316" frameX="-197" frameY="-49" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00094" x="2" y="952" width="406" height="316" frameX="-197" frameY="-49" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00106" x="412" y="316" width="412" height="314" frameX="-193" frameY="-47" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00113" x="410" y="952" width="412" height="314" frameX="-194" frameY="-47" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00115" x="818" y="632" width="412" height="314" frameX="-193" frameY="-47" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00116" x="826" y="316" width="412" height="314" frameX="-193" frameY="-47" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00121" x="410" y="1268" width="410" height="314" frameX="-195" frameY="-47" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00122" x="410" y="1584" width="410" height="314" frameX="-195" frameY="-47" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00123" x="822" y="1268" width="410" height="314" frameX="-195" frameY="-47" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00124" x="822" y="1584" width="410" height="314" frameX="-195" frameY="-47" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00125" x="1234" y="1572" width="410" height="314" frameX="-195" frameY="-47" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00140" x="2" y="1270" width="406" height="316" frameX="-197" frameY="-49" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00141" x="2" y="1588" width="406" height="316" frameX="-197" frameY="-49" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00142" x="410" y="634" width="406" height="316" frameX="-197" frameY="-49" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00153" x="1240" y="316" width="414" height="312" frameX="-198" frameY="-50" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00154" x="1240" y="630" width="414" height="312" frameX="-197" frameY="-50" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00159" x="1232" y="944" width="414" height="312" frameX="-197" frameY="-50" frameWidth="800" frameHeight="632"/>
+    <SubTexture name="Super_Win_00160" x="1234" y="1258" width="414" height="312" frameX="-197" frameY="-50" frameWidth="800" frameHeight="632"/>
+</TextureAtlas>

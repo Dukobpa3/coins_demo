@@ -9,10 +9,6 @@ package movieclips
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import flash.system.System;
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
-	import flash.text.TextFormat;
 
 	import gd.eggs.customanim.AnimationManager;
 	import gd.eggs.customanim.AnimationModel;

@@ -9,20 +9,20 @@ package fireworks
 
 	import org.flintparticles.common.events.EmitterEvent;
 	import org.flintparticles.twoD.emitters.Emitter2D;
-	import org.flintparticles.twoD.renderers.BitmapRenderer;
+	import org.flintparticles.twoD.renderers.BitmapLineRenderer;
 
 
 	public class FireworksPanel extends Sprite
 	{
-		private var _renderer:BitmapRenderer;
+		private var _renderer:BitmapLineRenderer;
 
 		private var _emitterCounter:int;
 
 		public function FireworksPanel()
 		{
-			_renderer = new BitmapRenderer( new Rectangle( 0, 0, Config.SCREEN_SIZE.x, Config.SCREEN_SIZE.y ) );
-			//_renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
-			//_renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
+			_renderer = new BitmapLineRenderer(new Rectangle( 0, 0, Config.SCREEN_SIZE.x, Config.SCREEN_SIZE.y ) );
+			_renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
+			_renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
 		}
 
 		public function start():void
