@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/5/trunk/src/idv/cjcat/pyronova/transform/color
+END
+PyroColorTransform.as
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/5/trunk/src/idv/cjcat/pyronova/transform/color/PyroColorTransform.as
+END
+ExposureTransform.as
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/5/trunk/src/idv/cjcat/pyronova/transform/color/ExposureTransform.as
+END
+TintTransform.as
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/5/trunk/src/idv/cjcat/pyronova/transform/color/TintTransform.as
+END
+BasicColorTransform.as
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/5/trunk/src/idv/cjcat/pyronova/transform/color/BasicColorTransform.as
+END
+ColorTransformClassPackage.as
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/5/trunk/src/idv/cjcat/pyronova/transform/color/ColorTransformClassPackage.as
+END
