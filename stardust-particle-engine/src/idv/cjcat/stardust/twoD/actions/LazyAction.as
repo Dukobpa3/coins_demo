@@ -371,7 +371,7 @@
 		//------------------------------------------------------------------------------------------------
 		
 		override public function getRelatedObjects():Array {
-			return deathTrigger.sd::actions.sd::actions
+			return deathTrigger.sd::actionCollection.sd::actions
 					.concat(additionalActions.sd::actions);
 		}
 		
@@ -394,10 +394,10 @@
 			xml.@undead = undead;
 			xml.@stardustSpriteUpdate = stardustSpriteUpdate;
 			
-			if (deathTrigger.sd::actions.sd::actions.length > 0) {
+			if (deathTrigger.sd::actionCollection.sd::actions.length > 0) {
 				xml.appendChild(<deathTriggerActions/>);
 				var action:Action;
-				for each (action in deathTrigger.sd::actions.sd::actions) {
+				for each (action in deathTrigger.sd::actionCollection.sd::actions) {
 					xml.deathTriggerActions.appendChild(action.getXMLTag());
 				}
 			}

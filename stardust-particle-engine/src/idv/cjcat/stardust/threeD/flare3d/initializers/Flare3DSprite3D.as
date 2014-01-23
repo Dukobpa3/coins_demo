@@ -1,6 +1,7 @@
 package idv.cjcat.stardust.threeD.flare3d.initializers {
 	import flare.core.Sprite3D;
 	import flare.core.Vertex3D;
+	import flare.materials.SpriteMaterial;
 	import flare.materials.SpriteTextureMaterial;
 	import idv.cjcat.stardust.common.particles.Particle;
 	import idv.cjcat.stardust.threeD.flare3d.Flare3DVertex3DSprite3DPair;
@@ -28,7 +29,7 @@ package idv.cjcat.stardust.threeD.flare3d.initializers {
 		
 		override public final function initialize(particle:Particle):void {
 			var v3D:Vertex3D = new Vertex3D();
-			var s3D:Sprite3D = new Sprite3D(v3D, 10, 10, _material);
+			var s3D:Sprite3D = new Sprite3D(v3D, 10, 10, _material as SpriteMaterial);
 			
 			particle.target = new Flare3DVertex3DSprite3DPair(v3D, s3D);
 		}
