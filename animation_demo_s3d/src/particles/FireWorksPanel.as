@@ -9,6 +9,8 @@ package particles
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Rectangle;
 
+	import gd.eggs.util.GlobalTimer;
+
 	import org.flintparticles.common.events.EmitterEvent;
 
 	import org.flintparticles.twoD.emitters.Emitter2D;
@@ -20,7 +22,6 @@ package particles
 	import starling.textures.Texture;
 
 	import utils.Config;
-	import utils.GlobalTimer;
 
 
 	public class FireWorksPanel extends Sprite
@@ -41,14 +42,14 @@ package particles
 
 		public function start():void
 		{
-			GlobalTimer.getInstance().addTimerCallback(launchFirework);
-			GlobalTimer.getInstance().addFrameCallback(onFrame);
+			GlobalTimer.addTimerCallback(launchFirework);
+			GlobalTimer.addFrameCallback(onFrame);
 		}
 
 		public function stop():void
 		{
-			GlobalTimer.getInstance().removeTimerCallback(launchFirework);
-			GlobalTimer.getInstance().removeFrameCallback(onFrame);
+			GlobalTimer.removeTimerCallback(launchFirework);
+			GlobalTimer.removeFrameCallback(onFrame);
 		}
 
 		private function launchFirework(date:Date):void

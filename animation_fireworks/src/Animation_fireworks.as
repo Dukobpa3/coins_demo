@@ -37,8 +37,8 @@ package {
 		public function Animation_fireworks()
 	    {
 		    _renderer = new BitmapRenderer( new Rectangle( 0, 0, Config.SCREEN_SIZE.x, Config.SCREEN_SIZE.y ) );
-		    _renderer.addFilter( new BlurFilter( 1, 1, 1 ) );
-		    _renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.85,0 ] ) );
+		    _renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
+		    _renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
 
 		    addChild(_renderer);
 
@@ -63,7 +63,7 @@ package {
 			emitter.addAction( new Age( Quadratic.easeIn ) );
 			emitter.addAction( new Move() );
 			emitter.addAction( new Fade() );
-			emitter.addAction( new Accelerate( 0, 100) );
+			emitter.addAction( new Accelerate( 0, 75) );
 			emitter.addAction( new LinearDrag( 0.5 ) );
 			//---------------------
 
@@ -82,7 +82,7 @@ package {
 			var emitter:Emitter2D = event.currentTarget as Emitter2D;
 			emitter.removeEventListener(EmitterEvent.EMITTER_EMPTY, removeFirework);
 			emitter.killAllParticles();
-			_renderer.removeEmitter(emitter);
+			if(_renderer.emitters.length > 1) _renderer.removeEmitter(emitter);
 		}
 	}
 }

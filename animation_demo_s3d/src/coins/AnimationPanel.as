@@ -2,6 +2,8 @@ package coins
 {
 	import aze.motion.eaze;
 
+	import gd.eggs.util.GlobalTimer;
+
 	import starling.core.Starling;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -11,7 +13,6 @@ package coins
 	import starling.utils.VAlign;
 
 	import utils.Config;
-	import utils.GlobalTimer;
 
 
 	public class AnimationPanel extends Sprite
@@ -23,7 +24,6 @@ package coins
 
 		private var _coins:Vector.<MovieClip>;
 		private var _unsorted:Vector.<MovieClip>;
-		private var _globalTimer:GlobalTimer;
 
 		private var _counter:TextField;
 		private var _date:int;
@@ -45,8 +45,6 @@ package coins
 			_coins ||= new Vector.<MovieClip>();
 			_unsorted ||= new Vector.<MovieClip>();
 
-			_globalTimer ||= GlobalTimer.getInstance();
-
 			_counter ||= new TextField(170, 80, "", "Ubuntu", 14);
 			_counter.bold = true;
 			_counter.hAlign = HAlign.LEFT;
@@ -57,7 +55,7 @@ package coins
 			_launched = 0;
 			_complete = 0;
 
-			_globalTimer.addFrameCallback(onFrame);
+			GlobalTimer.addFrameCallback(onFrame);
 		}
 
 		private function sortByDepth(x:MovieClip, y:MovieClip):Number
@@ -126,7 +124,7 @@ package coins
 
 		public function clean():void
 		{
-			_globalTimer.removeFrameCallback(onFrame);
+			GlobalTimer.removeFrameCallback(onFrame);
 			_launched = 0;
 			_complete = 0;
 
