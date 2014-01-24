@@ -4,3 +4,6 @@
 [submodule "eggs/eggs-utils-as3"]
 	path = eggs/eggs-utils-as3
 	url = git@github.com:eggs-gd/eggs-utils-as3.git
+[submodule "modules/Flint-particles-starling-integration"]
+	path = modules/Flint-particles-starling-integration
+	url = git@github.com:Dukobpa3/Flint-particles-starling-integration.git
